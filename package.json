@@ -1,8 +1,12 @@
 {
-  "name": "tsgm-cli",
+  "name": "@locnt19/tsgm-cli",
   "version": "1.0.0",
   "description": "TSGM CLI for Node with Typescript, Apollo GraphQL Server and MongoDB",
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/locnt19/tsgm-cli"
+  },
   "license": "MIT",
   "author": "Fatih Turker",
   "main": "dist/index.js",
@@ -31,7 +35,6 @@
   },
   "preferGlobal": true,
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@locnt19"
-  },
-  "git repository": "https://github.com/locnt19/tsgm-cli"
+    "registry": "https://npm.pkg.github.com/locnt19"
+  }
 }
