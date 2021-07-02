@@ -1,0 +1,18 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "object-literal-sort-keys": false,
+    "no-console": false,
+    "arrow-return-shorthand": true,
+    "interface-name": [true, "never-prefix"],
+    "newline-before-return": true,
+    "no-consecutive-blank-lines": true,
+    "no-var-requires": true
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["schemas/*.ts"]
+  }
+}
