@@ -1,6 +1,6 @@
 {
   "name": "@locnt19/tsgm-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TSGM CLI for Node with Typescript, Apollo GraphQL Server and MongoDB",
   "keywords": [],
   "repository": {

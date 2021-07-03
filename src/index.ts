@@ -6,7 +6,7 @@ import * as yargs from "yargs";
 import * as shell from "shelljs";
 import * as inquirer from "inquirer";
 import * as template from "./utils/template";
-import chalk from "chalk";
+import * as chalk from "chalk";
 
 /**
  * @description holds the project generator
@@ -179,6 +179,8 @@ const postProcessNode = (options: CliOptions) => {
 // skip files
 const SKIP_FILES = ["node_modules", ".template.json"];
 
+const CHANGE_PROJECT_NAME_FILES = ["package.json"];
+
 /**
  * creates project directories with contents
  * @param templatePath template path
@@ -198,10 +200,14 @@ const createDirectoryContents = (
     // get stats about the current file
     const stats = fs.statSync(origFilePath);
 
-    if (SKIP_FILES.indexOf(file) > -1) return;
+    if (SKIP_FILES.includes(file)) return;
 
     if (stats.isFile()) {
       let contents = fs.readFileSync(origFilePath, "utf8");
+
+      if (CHANGE_PROJECT_NAME_FILES.includes(file)) {
+        contents = contents.replace("project_name", projectName);
+      }
 
       contents = template.render(contents, { projectName });
 
