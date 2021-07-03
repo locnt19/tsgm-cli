@@ -7,7 +7,7 @@ var yargs = require("yargs");
 var shell = require("shelljs");
 var inquirer = require("inquirer");
 var template = require("./utils/template");
-var chalk_1 = require("chalk");
+var chalk = require("chalk");
 /**
  * @description holds the project generator
  */
@@ -56,12 +56,12 @@ inquirer.prompt(QUESTIONS).then(function (answers) {
  */
 var showMessage = function (options) {
     console.log("");
-    console.log(chalk_1.default.green("Done."));
-    console.log(chalk_1.default.green("Go into the project: cd " + options.projectName));
+    console.log(chalk.green("Done."));
+    console.log(chalk.green("Go into the project: cd " + options.projectName));
     var message = options.config.postMessage;
     if (message) {
         console.log("");
-        console.log(chalk_1.default.yellow(message));
+        console.log(chalk.yellow(message));
         console.log("");
     }
 };
@@ -87,7 +87,7 @@ var getTemplateConfig = function (templatePath) {
  */
 var createProject = function (projectPath) {
     if (fs.existsSync(projectPath)) {
-        console.log(chalk_1.default.red("Folder " + projectPath + " exists. Delete or use another name."));
+        console.log(chalk.red("Folder " + projectPath + " exists. Delete or use another name."));
         return false;
     }
     fs.mkdirSync(projectPath);
@@ -132,12 +132,13 @@ var postProcessNode = function (options) {
         }
     }
     else {
-        console.log(chalk_1.default.red("No yarn or npm found. Cannot run installation."));
+        console.log(chalk.red("No yarn or npm found. Cannot run installation."));
     }
     return true;
 };
 // skip files
 var SKIP_FILES = ["node_modules", ".template.json"];
+var CHANGE_PROJECT_NAME_FILES = ["package.json"];
 /**
  * creates project directories with contents
  * @param templatePath template path
@@ -150,10 +151,13 @@ var createDirectoryContents = function (templatePath, projectName, config) {
         var origFilePath = path.join(templatePath, file);
         // get stats about the current file
         var stats = fs.statSync(origFilePath);
-        if (SKIP_FILES.indexOf(file) > -1)
+        if (SKIP_FILES.includes(file))
             return;
         if (stats.isFile()) {
             var contents = fs.readFileSync(origFilePath, "utf8");
+            if (CHANGE_PROJECT_NAME_FILES.includes(file)) {
+                contents = contents.replace("project_name", projectName);
+            }
             contents = template.render(contents, { projectName: projectName });
             var writePath = path.join(CURR_DIR, projectName, file);
             fs.writeFileSync(writePath, contents, "utf8");
